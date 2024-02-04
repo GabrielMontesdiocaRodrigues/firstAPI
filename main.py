@@ -1,5 +1,6 @@
-from fastapi import FastAPI, Request, Form, Depends
+from fastapi import FastAPI, Request, Form, Depends, status
 
+from starlette.responses import RedirectResponse
 from starlette.templating import Jinja2Templates
 
 from sqlalchemy.orm import Session
@@ -29,5 +30,29 @@ def home(request: Request, db: Session = Depends(get_db)):
 
 
 @app.post('/addBook')
-def addBook():
-    pass
+def addBook(request: Request, book_title: str, book_price: float, book_genre: str = 'Undefined', db: Session = Depends(get_db)):
+    new_book = models.Book(
+        title=book_title, price=book_price, genre=book_genre)
+    db.add(new_book)
+    db.commit()
+    url = app.url_path_for("home")
+    return RedirectResponse(url=url, status_code=status.HTTP_303_SEE_OTHER)
+
+
+@app.get('/deleteBook/{book_id}')
+def deleteBook(request: Request, book_id: int, db: Session = Depends(get_db)):
+    book = db.query(models.Book).filter(models.Book.id == book_id).first()
+    db.delete(book)
+    db.commit()
+    url = app.url_path_for("home")
+    return RedirectResponse(url=url, status_code=status.HTTP_303_SEE_OTHER)
+
+
+@app.get('/updateBook/{book_id}')
+def updateBook(request: Request, book_id: int, db: Session = Depends(get_db)):
+    updated_book = db.query(models.Book).filter(
+        models.Book.id == book_id).first()
+    updated_book.complete = not updated_book.complete
+    db.commit()
+    url = app.url_path_for("home")
+    return RedirectResponse(url=url, status_code=status.HTTP_303_SEE_OTHER)
