@@ -6,26 +6,35 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Book List</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>    
+    <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
     <style></style>
 </head>
 
 <body>
     <div style="margin-top: 50px;" class="ui container">
         <h1 class="ui center aligned header">My Book List</h1>
-        <ul>
-            {% for book in books_list %}
-            <div class="ui segment">
-                <p class="book">
-                    <h2 class="ui big header" >{{book.title}} - {{book.id}}</h2>
-                    <p>Genre: {{book.genre}}</p>
-                    <p>Price: {{book.price}}</p>
-                    <button class = "ui green label" href="/deleteBook/{book_id}">Update</button>
-                    <button class = "ui red label" href="/updateBook/{book_id}">Delete</button>
-                </p>
-            </div>        
-            {% endfor %}    
-        </ul>
+        <form class="ui form" action="/addBook" method="post">
+            <div class="fields">
+                <input type="text" name="book_title" placeholder="Enter Title"><br>
+                <input type="text" name="book_genre" placeholder="Enter Genre"><br>
+            </div>
+            <div class="fields">
+                <input type="text" name="book_price" placeholder="Enter Price"><br>
+                <button class="ui blue label" type="submit">Add</button>
+            </div>
+        </form>
+        <hr>
+        {% for book in books_list %}
+        <div class="ui segment">
+            <p class="book">
+            <h2 class="ui big header">{{book.title}} - {{book.id}}</h2>
+            <p>Genre: {{book.genre}}</p>
+            <p>Price: {{book.price}}</p>
+            <button class="ui green label">Update</button>
+            <button class="ui red label">Delete</button>
+            </p>
+        </div>
+        {% endfor %}
     </div>
 </body>
 

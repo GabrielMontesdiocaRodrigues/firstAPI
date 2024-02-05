@@ -30,7 +30,7 @@ def home(request: Request, db: Session = Depends(get_db)):
 
 
 @app.post('/addBook')
-def addBook(request: Request, book_title: str, book_price: float, book_genre: str = 'Undefined', db: Session = Depends(get_db)):
+def addBook(request: Request, book_title: str = Form('book_title'), book_price: float = Form('book_price'), book_genre: str = 'Undefined', db: Session = Depends(get_db)):
     new_book = models.Book(
         title=book_title, price=book_price, genre=book_genre)
     db.add(new_book)
