@@ -10,6 +10,7 @@ This project is a Python-based solution for web scraping and local API integrati
 
    ```bash
    git clone https://github.com/GabrielMontesdiocaRodrigues/firstAPI/
+   cd firstAPI
    
 2. **Install dependencies:**
 
