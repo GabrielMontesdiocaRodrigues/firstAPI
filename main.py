@@ -30,9 +30,10 @@ def home(request: Request, db: Session = Depends(get_db)):
 
 
 @app.post('/addBook')
-def addBook(request: Request, book_title: str = Form('book_title'), book_price: float = Form('book_price'), book_genre: str = 'Undefined', db: Session = Depends(get_db)):
+def addBook(request: Request, book_title: str = Form('book_title'), book_price: float = Form('book_price'),
+            book_genre: str = 'Undefined', book_status: bool = False, db: Session = Depends(get_db)):
     new_book = models.Book(
-        title=book_title, price=book_price, genre=book_genre)
+        title=book_title, price=book_price, genre=book_genre, status=book_status)
     db.add(new_book)
     db.commit()
     url = app.url_path_for("home")
@@ -47,12 +48,14 @@ def deleteBook(request: Request, book_id: int, db: Session = Depends(get_db)):
     url = app.url_path_for("home")
     return RedirectResponse(url=url, status_code=status.HTTP_303_SEE_OTHER)
 
+# Ajustar o update e fazer os botões do usuário funcionar
+
 
 @app.get('/updateBook/{book_id}')
 def updateBook(request: Request, book_id: int, db: Session = Depends(get_db)):
     updated_book = db.query(models.Book).filter(
         models.Book.id == book_id).first()
-    updated_book.complete = not updated_book.complete
+    updated_book.status = not updated_book.status
     db.commit()
     url = app.url_path_for("home")
     return RedirectResponse(url=url, status_code=status.HTTP_303_SEE_OTHER)

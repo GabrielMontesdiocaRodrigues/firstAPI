@@ -10,3 +10,4 @@ class Book (Base):
     title: Mapped[str] = mapped_column()
     price: Mapped[float] = mapped_column()
     genre: Mapped[str] = mapped_column()
+    status: Mapped[bool] = mapped_column()

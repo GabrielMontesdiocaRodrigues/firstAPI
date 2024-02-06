@@ -30,8 +30,18 @@
             <h2 class="ui big header">{{book.title}} - {{book.id}}</h2>
             <p>Genre: {{book.genre}}</p>
             <p>Price: {{book.price}}</p>
-            <button class="ui green label">Update</button>
-            <button class="ui red label">Delete</button>
+            <p>Status: 
+                {% if book.status == False %}
+                <span class="ui gray label">Reading</span>
+                {% else %}
+                <span class="ui green label">Completed</span>
+                {% endif %}</p>
+            <button class="ui green label">
+                <a href="/updateBook/{{book.id}}">Update</a>
+            </button>
+            <button class="ui red label">
+                <a href="/deleteBook/{{book.id}}">Delete</a>
+            </button>
             </p>
         </div>
         {% endfor %}
