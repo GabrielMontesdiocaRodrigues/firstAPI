@@ -28,4 +28,5 @@
 
 # Virtual ambient #
 ######################
-*/venv/*
+/venv/*
+/__pycache__/*
