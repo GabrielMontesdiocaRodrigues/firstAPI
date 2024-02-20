@@ -47,7 +47,6 @@ def getBooks():
     books_price = []
     botton_next = getBottonNext()
     cotacao = getCotation()
-    i = 0
     while botton_next != None:
 
         title_web_elements = driver.find_elements(By.TAG_NAME, 'a')
